@@ -2,9 +2,6 @@ var Guy = function(name, birthYear, job) {
     this.name = name;
     this.birthYear = birthYear;
     this.job = job;
-    // this.calcAge = function() {
-    //     console.log(2020 - this.birthYear);
-    // }
 };
 
 

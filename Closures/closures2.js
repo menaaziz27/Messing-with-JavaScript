@@ -9,32 +9,34 @@ function retirement(retirementAge) {
     }
 }
 
-var retirementUS = retirement(66);
-var retirementEUR = retirement(65);
-var retirementICEland = retirement(67);
+function people_proto(yearsArr, retirementAge) {
+    this.years = yearsArr;
+    this.retirement = retirementAge;
+}
 
-var UsPeople = [1990, 1999, 2001, 2004];
-var EurPeople = [1967, 1988, 1977, 2000];
-var AusPeople = [1991, 1985, 1979, 1965];
+var US = new people_proto([1990, 1999, 2001, 2004], retirement(66));
 
-function calcYears(listOfPeople) {
+var EU = new people_proto([1967, 1988, 1977, 2000], retirement(65));
+
+var AU = new people_proto([1991, 1985, 1979, 1965], retirement(67));
+
+function calcYears(peopleObj) {
 
     var remainYears = [];
 
-    for (var i = 0; i < listOfPeople.length; i++) {
-        remainYears.push(retirementUS(listOfPeople[i]));
+    for (var i = 0; i < peopleObj.years.length; i++) {
+        remainYears.push(peopleObj.retirement(peopleObj.years[i]));
     }
 
     return remainYears;
 }
-console.log('Americans years specific to America retirement age');
-var americans = calcYears(UsPeople);
-console.log(americans);
 
-console.log('Europeans years specific to Europe retirement age');
-var European = calcYears(EurPeople);
-console.log(European);
+var USAs = calcYears(US);
+console.log(USAs);
 
-console.log('Australlians years specific to Australlia retirement age');
-var Australlians = calcYears(AusPeople);
+var EURs = calcYears(EU);
+console.log(EURs);
+
+var Australlians = calcYears(AU);
 console.log(Australlians);
+

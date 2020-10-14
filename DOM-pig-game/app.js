@@ -94,11 +94,3 @@ function init() {
     document.querySelector('.player-1-panel').classList.remove('active');
     document.querySelector('.player-0-panel').classList.add('active');
 }
-
-
-
-// Dice = Math.floor(Math.random() * 6) + 1
-// document.querySelector("#current-" + activePlayer).textContent = Dice;
-
-// var x = document.querySelector('#score-0').textContent;
-// console.log(x);

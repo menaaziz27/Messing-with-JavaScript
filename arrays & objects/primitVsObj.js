@@ -1,14 +1,3 @@
-// primitives vs objects
-
-//primitives : numbers, strings, booleans, undefined, null
-//objects : everything else
-
-//primitives : variables containing primitives actually hold this data inside the variable itself
-//objects : variables associated with objects don't actually contain the object
-// but contains a reference to the memory where the object location is stored 
-
-
-
 // difference between primitives and objects
 
 // primitives
