@@ -5,9 +5,9 @@ var GameRunning = true;
 var Questions = function () {
     this.QuestionsList = [
         {
-            Q : 'what is your instructor name ?',
+            Q : 'what your type of songs?',
             A : '1',
-            possibleAnswers : ['Mina', 'Jonas']
+            possibleAnswers : ['Pop', 'Rock']
         },
         {
             Q : 'what is your fav color ?',
@@ -17,7 +17,7 @@ var Questions = function () {
         {
             Q : 'who is your bestfriend ?',
             A : '1',
-            possibleAnswers : ['NoOne', 'smsm']
+            possibleAnswers : ['foo', 'baz']
         }
     ];
 }
