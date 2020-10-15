@@ -26,19 +26,25 @@ var Questions = function () {
 // ----init Game----
 while(GameRunning) {
 
-    // [questionPicked, possibleAnswers, AnswerOfQuestion, questionObject]
+
+    // 1- generate question 
     var questionGenerated = generateQuestion();
+    // [questionPicked, possibleAnswers, questionObject]
 
+    // 2- display the question with possible answers
     var displayFuncParameters = [questionGenerated[0], questionGenerated[1]]; // [questionPicked, possibleAnswers]
-
-    var questionObject = questionGenerated[2];
 
     displayQuestion(displayFuncParameters);
 
+    // 3- take the input from user 
     var userAnswer = returnInput();
 
-    // answerValidation(userAnswer, questionGenerated[2], questionObject);
+    // 4- validate the user input with the correct answer 
+    var questionObject = questionGenerated[2]; 
+    // questionObject
+
     answerValidation(userAnswer, questionObject);
+    // answerValidation(userAnswer, {Q: "...", A: "...", possibleAnswers: [, ,]});
 
 }
 
@@ -47,13 +53,13 @@ function generateQuestion() {
 
     var q = new Questions();
     var randNum = Math.floor(Math.random() * 3);
-
-    // questionObject = { Q : 'what is your instructor name ?', A : 'Mina', possibleAnswers : ['Mina', 'Jonas']}
-    var questionObject = q.QuestionsList[randNum];
     
     var questionPicked = q.QuestionsList[randNum].Q;
 
     var possibleAnswers =  [q.QuestionsList[randNum].possibleAnswers[0], q.QuestionsList[randNum].possibleAnswers[1]];
+
+    // questionObject = { Q : 'what is your instructor name ?', A : 'Mina', possibleAnswers : ['Mina', 'Jonas']}
+    var questionObject = q.QuestionsList[randNum];
 
     return [questionPicked, possibleAnswers, questionObject];
 
@@ -62,7 +68,7 @@ function generateQuestion() {
 
 function displayQuestion(array) {
 
-    // display question
+    // display the question
     console.log(array[0]);
 
     // display possible answer to this question
@@ -81,7 +87,7 @@ function returnInput(userAnswer) {
 function answerValidation(userInput, questionObject) {
 
     if (userInput == MyAnswer(questionObject)) {
-        
+
         score += 1;
         console.log(`Good Job! Your Score Now Is ${score}`);
 
@@ -102,4 +108,3 @@ function answerValidation(userInput, questionObject) {
 function MyAnswer(questionObject) {
     return questionObject.A;
 }
-
