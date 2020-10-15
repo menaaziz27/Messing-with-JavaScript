@@ -26,7 +26,6 @@ var Questions = function () {
 // ----init Game----
 while(GameRunning) {
 
-
     // 1- generate question 
     var [questionPicked, possibleAnswers, questionObject] = generateQuestion(); 
 
