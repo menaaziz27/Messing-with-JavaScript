@@ -58,8 +58,8 @@ function generateQuestion() {
 
     var possibleAnswers =  [q.QuestionsList[randNum].possibleAnswers[0], q.QuestionsList[randNum].possibleAnswers[1]];
 
-    // questionObject = { Q : 'what is your instructor name ?', A : 'Mina', possibleAnswers : ['Mina', 'Jonas']}
     var questionObject = q.QuestionsList[randNum];
+    // questionObject = { Q : 'what your type of songs?', A : '1', possibleAnswers : ['Pop', 'Rock']}
 
     return [questionPicked, possibleAnswers, questionObject];
 
