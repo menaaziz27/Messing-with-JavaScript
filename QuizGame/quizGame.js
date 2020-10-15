@@ -28,22 +28,20 @@ while(GameRunning) {
 
 
     // 1- generate question 
-    var questionGenerated = generateQuestion();
-    // [questionPicked, possibleAnswers, questionObject]
+    var [questionPicked, possibleAnswers, questionObject] = generateQuestion(); 
 
     // 2- display the question with possible answers
-    var displayFuncParameters = [questionGenerated[0], questionGenerated[1]]; // [questionPicked, possibleAnswers]
+    var displayInfo = [questionPicked, possibleAnswers]; 
 
-    displayQuestion(displayFuncParameters);
+    displayQuestion(displayInfo); 
 
     // 3- take the input from user 
     var userAnswer = returnInput();
 
     // 4- validate the user input with the correct answer 
-    var questionObject = questionGenerated[2]; 
-    // questionObject
+    var questionObj = questionObject; 
 
-    answerValidation(userAnswer, questionObject);
+    answerValidation(userAnswer, questionObj); 
     // answerValidation(userAnswer, {Q: "...", A: "...", possibleAnswers: [, ,]});
 
 }
@@ -58,8 +56,8 @@ function generateQuestion() {
 
     var possibleAnswers =  [q.QuestionsList[randNum].possibleAnswers[0], q.QuestionsList[randNum].possibleAnswers[1]];
 
+    // questionObject = { Q : 'what is your instructor name ?', A : 'Mina', possibleAnswers : ['Mina', 'Jonas']}
     var questionObject = q.QuestionsList[randNum];
-    // questionObject = { Q : 'what your type of songs?', A : '1', possibleAnswers : ['Pop', 'Rock']}
 
     return [questionPicked, possibleAnswers, questionObject];
 
