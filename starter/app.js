@@ -61,8 +61,8 @@ var UICntoller = (function () {
         inputDescription: '.add__description',
         inputValue: '.add__value',
         inputButton: '.add__btn',
-        incomeContainer: '.income__list',
-        expenseContainer: '.expenses__list'
+        incomeList: '.income__list',
+        expenseList: '.expenses__list'
     }
 
     return {
@@ -74,49 +74,29 @@ var UICntoller = (function () {
             };
         },
         addListItem: function (obj, type) {
-            var html, newHtml, element;
+            var html, element;
 
             // create HTML string with replace portions
             if (type === 'inc') {
-                element = domStrings.incomeContainer;
-                html = '<div class="item clearfix" id="income-%id%">' +
-                    '<div class="item__description">%description%</div>' +
-                    '<div class="right clearfix">' +
-                    '<div class="item__value">%value%</div>' +
-                    '<div class="item__delete">' +
-                    '<button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>';
+                element = domStrings.incomeList;
+                html = '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div> \
+                <div class="right clearfix">  <div class="item__value">%value%</div> <div class="item__delete">\
+                <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>  </div></div></div>';
             } else if (type === 'exp') {
-                element = domStrings.expenseContainer;
-                html = '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div>' +
-                    '<div class="right clearfix"><div class="item__value">%value%</div><div class="item__percentage">21%</div>' +
-                    '<div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline">' +
-                    '</i></button></div></div></div>';
+                element = domStrings.expenseList
+                html = '<div class="item clearfix" id="expense-0"><div class="item__description">\
+                Apartment rent</div><div class="right clearfix">\
+                <div class="item__value">- 900.00</div><div class="item__percentage">21%</div>\
+                <div class="item__delete">\<button class="item__delete--btn"><i class="ion-ios-close-outline">\
+                </i></i></button></div></div></div>';
             }
             // replace the strings with the actual data 
             newHtml = html.replace('%id%', obj.id);
             newHtml = newHtml.replace('%description%', obj.description);
             newHtml = newHtml.replace('%value%', obj.value);
             // insert the new string in the HTML content 
-            document.querySelector(element).insertAdjacentHTML('beforeend', newHtml);
+            document.querySelector(element).insertAdjacentElement('beforeend', newHtml);
         },
-
-        clearFields: function () {
-            var fields, arrayField;
-
-            fields = document.querySelectorAll(domStrings.inputDescription + ', ' + domStrings.inputValue);
-
-            arrayField = Array.prototype.slice.call(fields);
-
-            arrayField.forEach(function (current, index, array) {
-                current.value = "";
-            });
-
-            arrayField[0].focus();
-        },
-
         getDomStrings: function () {
             return domStrings;
         }
@@ -142,17 +122,14 @@ var controller = (function (budgetCtrl, UICtrl) {
     }
 
     var CtrlAddItem = function () {
-        var input, newItem;
+
         // 1- Get the field input data 
-        input = UICtrl.getInput();
+        var input = UICtrl.getInput();
 
         // 2- add the item to the budget controller 
-        newItem = budgetCtrl.addItem(input.type, input.description, input.value);
+        var newItem = budgetCtrl.addItem(input.type, input.description, input.value);
         // 3- add the item to the UI 
         UICtrl.addListItem(newItem, input.type);
-
-        // 4- clear fields 
-        UICtrl.clearFields();
         // 4- calculate the budget 
 
         // 5- display the budget in the UI
