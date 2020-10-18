@@ -4,12 +4,28 @@ var budgetController = (function () {
         this.id = id;
         this.description = description;
         this.value = value;
+        this.percentage = -1
+    }
+
+    Expense.prototype.calcPercentages = function (totalIncome) {
+
+        if (totalIncome > 0) {
+            this.percentage = Math.round((this.value / totalIncome) * 100);
+        } else {
+            this.percentage = -1;
+        }
+
+    }
+
+    Expense.prototype.getPercentage = function () {
+        return this.percentage;
     }
 
     var Income = function (id, description, value) {
         this.id = id;
         this.description = description;
         this.value = value;
+        this.percentage = -1
     }
 
     var calculateTotal = function (type) {
@@ -85,6 +101,20 @@ var budgetController = (function () {
                 data.percentage = -1;
             }
 
+        },
+
+        calculatePercentages: function () {
+            data.allItems.exp.forEach(function (curr) {
+                curr.calcPercentages(data.totals.inc);
+            });
+        },
+
+        getPercentage: function () {
+            var allPerc = data.allItems.exp.map(function (curr) {
+                return curr.getPercentage();
+            });
+
+            return allPerc;
         },
 
         getBudget: function () {
@@ -231,6 +261,12 @@ var controller = (function (budgetCtrl, UICtrl) {
 
     function updatePercentages() {
 
+        // 1. calculate the percentage 
+        budgetCtrl.calculatePercentages();
+        // 2. read percentage from the budget controller 
+        var percentages = budgetCtrl.getPercentage();
+        // 3. update UI with the new percentages
+        console.log(percentages);
     }
 
     var CtrlAddItem = function () {
@@ -243,15 +279,16 @@ var controller = (function (budgetCtrl, UICtrl) {
             newItem = budgetCtrl.addItem(input.type, input.description, input.value);
             // 3- add the item to the UI 
             UICtrl.addListItem(newItem, input.type);
-
             // 4- clear fields 
             UICtrl.clearFields();
+            // 5- calculate budget
+            updateBudget();
+            // 6- update percentages
+            updatePercentages();
         }
-        // 5- calculate budget
-        updateBudget();
 
-        // 6- update percentages
-        updatePercentages();
+
+
     };
 
     var CtrlDeleteItem = function (event) {
@@ -264,16 +301,18 @@ var controller = (function (budgetCtrl, UICtrl) {
             splitID = itemID.split('-');
             type = splitID[0];
             id = parseInt(splitID[1]);
+
+            // 1. delete the item from data structure
+            budgetCtrl.deleteItem(type, id)
+            // 2. delete item from UI 
+            UICtrl.deleteListItem(itemID);
+            // 3. update and show the new budget 
+            updateBudget();
+            // 4. update percentages
+            updatePercentages();
         }
 
-        // delete the item from data structure
-        budgetCtrl.deleteItem(type, id)
-        // delete item from UI 
-        UICtrl.deleteListItem(itemID);
-        // update and show the new budget 
-        updateBudget();
-        // update percentages
-        updatePercentages();
+
 
     }
 
